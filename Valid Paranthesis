@@ -1,0 +1,32 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if len(s) % 2 != 0:  
+            return False
+        h = {
+            "}" : "{",
+            ")" : "(",
+            "]" : "["
+        }
+        
+        stack = []
+        
+        for char in s:
+            if char not in h:
+                stack.append(char)
+            else:
+                if len(stack) == 0:
+                    return False
+                if h[char] != stack[len(stack) - 1]:
+                    return False
+                else:
+                    stack.pop()
+        if len(stack) != 0:
+            return False
+        return True
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Explanation: Stack & Hashmap
+
+Time Complexity: O(n), we traverse the string one time
+Space Complexity: O(n), hashmap consumes O(1) and stack consumes O(n)
+
+Notes: Since a valid parenthesis needs opening and closing, if the length of the string is odd, its automatically false
