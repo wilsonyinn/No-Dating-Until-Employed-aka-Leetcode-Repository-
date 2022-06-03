@@ -1,0 +1,24 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        i, j = 0, len(s) - 1
+        while i < j:
+            while i < j and not s[i].isalnum():
+                i += 1
+            while i < j and not s[j].isalnum():
+                j -= 1
+            if s[i].lower() != s[j].lower():
+                return False
+            i += 1
+            j -= 1
+        return True
+        
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Explanation: Two Pointers
+
+Time Complexity: O(n), although the time complexity is similar to other methods, the two pointer approach is faster because we only traverse half the
+                 string where other approaches will traverse the entire string
+Space Complexity: O(1), no extra space used besides constant variable which only take O(1) space
+
+Notes: isalnum() checks for alphanumeric characters 
+       .lower() or .upper() ensures the letters are same case
+       
