@@ -1,0 +1,58 @@
+**Good Solution**
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        
+        count = {}
+        left = 0
+        result = 0
+        
+        for right in range(len(s)):
+            #update hashmap
+            count[s[right]] = count.get(s[right], 0) + 1
+            
+            #check is substr is valid
+            maxf = max(count.values())
+            if right - left + 1 - maxf > k:  #if right - left + 1 <= k, then its valid
+                count[s[left]] -= 1
+                left += 1
+                
+            #update res
+            result = max(result, right - left + 1)
+        
+        return result
+        
+ **Slightly More Optimized** 
+ class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        
+        count = {}
+        left = 0
+        result = 0
+        maxf = 0
+        
+        for right in range(len(s)):
+            #update hashmap
+            count[s[right]] = count.get(s[right], 0) + 1
+            maxf = max(maxf, count[s[right]])
+            
+            #check is substr is valid
+            if right - left + 1 - maxf > k:  #if right - left + 1 <= k, then its valid
+                count[s[left]] -= 1
+                left += 1
+                
+            #update res
+            result = max(result, right - left + 1)
+        
+        return result
+       
+    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Explanation:
+
+Time Complexity: O(n), both soluitions are O(n), but the original solution scans the hashmap on each iteration which consumes a lot more time O(26n) which is optimized
+in the second solution.
+Space Complexity: O(1), worst case O(26) which reduces to O(1)
+
+Notes: The problem can be solved using two pointers/sliding window. To check if the substring is valid, we can use right - left + 1 - maxf <= k. If its not valid,
+       then need to update the hashmap and increment the left pointer
+
