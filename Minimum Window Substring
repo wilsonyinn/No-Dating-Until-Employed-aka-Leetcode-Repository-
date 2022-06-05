@@ -1,0 +1,30 @@
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        left = 0
+        result = ""
+        currSubstr = ""
+        
+        charMap = {}
+        
+        #add t to char map
+        for i in range(len(t)):
+            charMap[t[i]] = charMap.get(t[i], 0) + 1
+        #traverse the string
+        for right in range(len(s)):
+            #if char in hashmap, update hashmap
+            currSubstr += s[right]
+            if s[right] in charMap:
+                charMap[s[right]] -= 1
+            #while valid, increment left pointer until not valid & update the hashmap
+            while max(charMap.values()) <= 0:
+                if result == "" or len(currSubstr) < len(result):
+                    result = currSubstr
+                
+                if s[left] in charMap:
+                    charMap[s[left]] += 1
+                currSubstr = currSubstr[1::]
+                left += 1
+
+        return result 
+        
+ 
