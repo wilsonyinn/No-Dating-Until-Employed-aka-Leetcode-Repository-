@@ -1,0 +1,19 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        
+        #appending does not work if the key does not already exist so we use defaultdict to cover this one edge case
+        res = defaultdict(list)  #mapping charCount to list of anagrams
+        
+        for s in strs:
+            count = [0] * 26
+            
+            for c in s:
+                count[ord(c) - ord("a")] += 1
+                
+            res[tuple(count)].append(s) #list cannot be keys in python, so we can use a tuple instead
+            
+        return res.values()
+    
+    #Time Complexity: O(m * n) where m is the number of strings and n is the average length of the strings
+    #                 the time is takes is actually O(m * n * 26) we are using the tuple as a key but 26 is constant so just O(m * n) is good
+    #Space Complexity: O(m * n) stores the total information stored in our hashmap
