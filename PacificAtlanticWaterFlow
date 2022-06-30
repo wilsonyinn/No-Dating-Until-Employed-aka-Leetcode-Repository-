@@ -1,0 +1,32 @@
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        row, col = len(heights), len(heights[0]) 
+        pac, atl = set(), set()
+        
+        def dfs(r, c, visit, previousHeight):
+            #check bounds, check if >= previous height, check if already visited
+            if r < 0 or r == row or c < 0 or c == col:
+                return
+            if heights[r][c] < previousHeight:
+                return 
+            if (r,c) in visit:
+                return
+            
+            visit.add((r,c))
+            dfs(r + 1, c, visit, heights[r][c])
+            dfs(r - 1, c, visit, heights[r][c])
+            dfs(r, c + 1, visit, heights[r][c])
+            dfs(r, c - 1, visit, heights[r][c])
+            
+        for r in range(row): # check left pac & right atl
+            dfs(r, 0, pac, heights[r][0])
+            dfs(r, col - 1, atl, heights[r][col-1])
+            
+        for c in range(col): # check upper pac & lower atl 
+            dfs(0, c, pac, heights[0][c])
+            dfs(row - 1, c, atl, heights[row-1][c])
+            
+        return pac & atl
+-----------------------------------------------------------------------------------------------------          
+Time Complexity: O(n * m), only runs DFS on the cells bordering ocean, rather than the entire grid 
+Space Complexity: O(n * m), uses 2 sets that in worse case will store every cell in grid
