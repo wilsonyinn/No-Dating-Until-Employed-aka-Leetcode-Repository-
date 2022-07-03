@@ -1,0 +1,33 @@
+#Queue Solution
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        queue = []
+        result = ListNode()
+        curr = result
+        
+        while head is not None:
+            queue.append(head.val)
+            head = head.next
+        print(queue)
+        while len(queue) != 0:
+            curr.next = ListNode(queue.pop())
+            curr = curr.next
+        return result.next
+------------------------------------------------------------------------------------------------------------------------
+#Iterative Solution *
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev, curr = None, head
+        
+        while curr is not None:
+            temp_next = curr.next
+            curr.next = prev 
+            prev = curr
+            curr = temp_next
+            
+        return prev
+
+Time Complexity: O(n) 
+Space Complexity: O(1)
+------------------------------------------------------------------------------------------------------------------------
+#Recursive Solution * 
