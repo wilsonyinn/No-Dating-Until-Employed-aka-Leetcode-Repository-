@@ -1,0 +1,15 @@
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        #at one step, theres only one way
+        #at two steps, theres only two ways
+        #at three steps:
+            #if we take one step -> only 2 steps left
+            #if we take two steps -> only 1 step left
+            
+        one, two =  1, 1 
+        for i in range(n - 1):
+            tmp = one
+            one = one + two
+            two = tmp
+        
+        return one
